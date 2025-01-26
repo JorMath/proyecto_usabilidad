@@ -1,0 +1,134 @@
+.box {
+    --border-angle: 0deg;
+    border-radius: 12px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 2px 4px hsl(0 0% 0% / 25%);
+    animation: border-angle-rotate 2s infinite linear;
+    border: 0.5rem solid transparent;
+    position: relative;
+
+    &.a {
+        background: linear-gradient(white, white) padding-box,
+            conic-gradient(from var(--border-angle),
+                oklch(100% 100% 0deg),
+                oklch(100% 100% 45deg),
+                oklch(100% 100% 90deg),
+                oklch(100% 100% 135deg),
+                oklch(100% 100% 180deg),
+                oklch(100% 100% 225deg),
+                oklch(100% 100% 270deg),
+                oklch(100% 100% 315deg),
+                oklch(100% 100% 360deg)) border-box;
+    }
+
+    &.b {
+        background: linear-gradient(white, white) padding-box,
+            conic-gradient(from var(--border-angle),
+                var(--bg) 50%,
+                white) border-box;
+    }
+
+    &.c {
+        border-radius: 100%;
+        background: radial-gradient(circle, var(--bg) 60%, transparent 60%);
+
+        &:before,
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            inset: 4px;
+            border-radius: 100%;
+            animation: border-angle-rotate 4s infinite linear;
+            z-index: -1;
+        }
+
+        &:before {
+            inset: 0;
+            background: repeating-conic-gradient(from var(--border-angle),
+                    var(--bg),
+                    var(--bg) 30deg,
+                    oklch(100% 50% 190deg) calc(360deg / 6)) border-box;
+        }
+
+        &:after {
+            background: repeating-conic-gradient(from calc(var(--border-angle) * -1),
+                    oklch(100% 40% 50deg),
+                    black 60deg) border-box;
+        }
+    }
+}
+
+@keyframes border-angle-rotate {
+    from {
+        --border-angle: 0deg;
+    }
+
+    to {
+        --border-angle: 360deg;
+    }
+}
+
+
+@property --border-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+/* Estilos básicos */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.contenedor {
+    display: grid;
+    grid-template-areas:
+        "palabra imagen"
+        "palabra imagen"
+        "palabra imagen";
+
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.palabra {
+    margin: 10px;
+}
+
+.palabras {
+    grid-area: palabra;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagenes {
+    grid-area: imagen;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen {
+    margin: 10px;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+.imagen.a {
+    background-size: cover;
+}
+.conexion {
+    position: absolute;
+    background-color: #000;
+    height: 2px;
+    transform-origin: center;
+  }
