@@ -1,66 +1,109 @@
 .box {
     --border-angle: 0deg;
     border-radius: 12px;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 0px 2px 4px hsl(0 0% 0% / 25%);
-    animation: border-angle-rotate 2s infinite linear;
-    border: 0.5rem solid transparent;
+    border: 2px solid;
     position: relative;
+    background-color: #4C4C4C;
 
-    &.a {
-        background: linear-gradient(white, white) padding-box,
-            conic-gradient(from var(--border-angle),
-                oklch(100% 100% 0deg),
-                oklch(100% 100% 45deg),
-                oklch(100% 100% 90deg),
-                oklch(100% 100% 135deg),
-                oklch(100% 100% 180deg),
-                oklch(100% 100% 225deg),
-                oklch(100% 100% 270deg),
-                oklch(100% 100% 315deg),
-                oklch(100% 100% 360deg)) border-box;
+    &.seleccionado {
+        background-color: gray;
     }
 
-    &.b {
-        background: linear-gradient(white, white) padding-box,
-            conic-gradient(from var(--border-angle),
-                var(--bg) 50%,
-                white) border-box;
+}
+
+.mensaje-exito {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.contenido-exito {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    animation: aparecer 0.5s ease;
+}
+
+@keyframes aparecer {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
     }
-
-    &.c {
-        border-radius: 100%;
-        background: radial-gradient(circle, var(--bg) 60%, transparent 60%);
-
-        &:before,
-        &:after {
-            content: "";
-            display: block;
-            position: absolute;
-            inset: 4px;
-            border-radius: 100%;
-            animation: border-angle-rotate 4s infinite linear;
-            z-index: -1;
-        }
-
-        &:before {
-            inset: 0;
-            background: repeating-conic-gradient(from var(--border-angle),
-                    var(--bg),
-                    var(--bg) 30deg,
-                    oklch(100% 50% 190deg) calc(360deg / 6)) border-box;
-        }
-
-        &:after {
-            background: repeating-conic-gradient(from calc(var(--border-angle) * -1),
-                    oklch(100% 40% 50deg),
-                    black 60deg) border-box;
-        }
+    to {
+        transform: scale(1);
+        opacity: 1;
     }
+}
+
+.contenido-exito button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s ease;
+}
+
+/* styles.css */
+.contenedor-superior {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.boton-regreso {
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.boton-regreso:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.boton-regreso:active {
+    transform: translateY(0);
+}
+
+.boton-regreso svg {
+    fill: #333;
+}
+
+.barra-progreso {
+    flex: 1; /* Ocupa el espacio restante */
+}
+
+.contenido-exito button:hover {
+    background: #45a049;
 }
 
 @keyframes border-angle-rotate {
@@ -92,13 +135,18 @@ body {
         "palabra imagen"
         "palabra imagen"
         "palabra imagen";
-
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+    position: relative; /* Añadido */
 }
 
 .palabra {
     margin: 10px;
+    color: aliceblue;
+}
+
+body{
+    background-color: #4C4C4C;
 }
 
 .palabras {
@@ -115,6 +163,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-color: aliceblue;
+    color: aliceblue;
 }
 
 .imagen {
@@ -127,8 +177,42 @@ body {
     background-size: cover;
 }
 .conexion {
+    
     position: absolute;
-    background-color: #000;
-    height: 2px;
-    transform-origin: center;
-  }
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Permite clics a través del div */
+}
+
+h1{
+    color: aliceblue;
+}
+
+.barra-progreso {
+    width: 80%;
+    height: 20px;
+    background-color: #818080;
+    border-radius: 10px;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.progreso {
+    width: 0%;
+    height: 100%;
+    background-color: #8EE000;
+    transition: width 0.3s ease;
+    border-radius: 10px;
+}
+
+.porcentaje {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #333;
+    font-weight: bold;
+}

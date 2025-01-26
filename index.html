@@ -1,33 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emparejar palabras con imágenes</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <script src="script.js" defer></script>
+    <title>Menú de Juegos</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #83a4d4, #b6fbff);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+        }
+
+        .botones-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .boton-juego {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .boton-juego:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .boton-juego:active {
+            transform: translateY(0);
+        }
+
+        .instrucciones {
+            margin-top: 2rem;
+            color: #7f8c8d;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+    </style>
 </head>
-
-
 <body>
-    <h1>Emparejar palabras con imágenes</h1>
-    <div class="contenedor">
-
-        <div class="conexion"></div>
-
-        <div class="palabras">
-            <div class="palabra box" data-palabra="Perro">Perro</div>
-            <div class="palabra box" data-palabra="Gato">Gato</div>
-            <div class="palabra box" data-palabra="Pato">Pato</div>
+    <div class="menu">
+        <h1>Juegos Educativos</h1>
+        
+        <div class="botones-menu">
+            <a href="select_pairs.html" class="boton-juego">
+                🎮 Juego de Emparejamiento
+            </a>
+            <a href="#" class="boton-juego" onclick="salir()">
+                🚪 Salir del Juego
+            </a>
         </div>
 
-        <div class="imagenes">
-            <img class="imagen box" src="Pato.jpeg" data-palabra="Pato">
-            <img class="imagen box" src="Perro.jpeg" data-palabra="Perro">
-            <img class="imagen box" src="Gato.jpeg" data-palabra="Gato">
+        <div class="instrucciones">
+            <h2>¿Cómo jugar?</h2>
+            <p>¡Haz clic en el juego que quieres iniciar! El objetivo es emparejar cada palabra con su imagen correspondiente. ¡Demuestra tus habilidades!</p>
         </div>
     </div>
-</body>
 
+    <script>
+        function salir() {
+            window.close();
+        }
+    </script>
+</body>
 </html>
