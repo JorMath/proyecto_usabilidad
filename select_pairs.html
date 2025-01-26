@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,29 +11,46 @@
 
 <body>
     <div class="contenedor-superior">
-        <button class="boton-regreso" onclick="window.location.href = 'index.html'" aria-label="Go back to the game menu">
+        <button class="boton-regreso" onclick="window.location.href = 'index.html'" tabindex="0"
+            aria-label="Go back to the game menu" role="button">
             <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
-                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
             </svg>
         </button>
-        <div class="barra-progreso" aria-label="Game progress">
-            <div class="progreso" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+        <div class="barra-progreso" role="region" aria-label="Game progress" tabindex="0">
+            <div class="progreso" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+                tabindex="-1">
+            </div>
         </div>
     </div>
-    <h1>Match Words with Images</h1>
 
-    <div class="contenedor" aria-label="Matching game area">
+    <h1 tabindex="0">Match Words with Images</h1>
+
+    <main class="contenedor" role="main" aria-label="Matching game area" tabindex="-1">
         <div class="conexion" aria-hidden="true"></div>
-        <div class="palabras" aria-label="Words to match"></div>
-        <div class="imagenes" aria-label="Images to match"></div>
-    </div>
-    
-    <div class="mensaje-exito" aria-live="polite" role="dialog">
-        <div class="contenido-exito">
-            <h2>Congratulations! 🎉</h2>
-            <p>All pairs have been matched correctly!</p>
-            <button onclick="reiniciarJuego()" aria-label="Play again">Play Again</button>
+
+        <div class="palabras" role="group" aria-label="Words to match" tabindex="-1">
+            <!-- Dynamic content with tabindex -->
+        </div>
+
+        <div class="imagenes" role="group" aria-label="Images to match" tabindex="-1">
+            <!-- Dynamic content with tabindex -->
+        </div>
+    </main>
+
+    <div class="mensaje-exito" role="alertdialog" aria-live="polite" aria-hidden="true" tabindex="-1">
+        <div class="contenido-exito" role="document">
+            <h2 tabindex="0">Congratulations! 🎉</h2>
+            <p tabindex="0">All pairs have been matched correctly!</p>
+            <button onclick="reiniciarJuego()" tabindex="0" aria-label="Play again" role="button">
+                Play Again
+            </button>
         </div>
     </div>
+    <div id="sr-message" 
+     aria-live="polite"
+     class="sr-only">
+</div>
 </body>
+
 </html>

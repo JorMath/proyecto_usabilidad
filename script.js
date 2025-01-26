@@ -5,6 +5,8 @@ let imagenSeleccionada = null;
 let palabraSeleccionada = null;
 let emparejamientosCorrectos = 0;
 emparejamientosCorrectosTotales = 0;
+// Emparejamiento correcto
+const srMessage = document.getElementById('sr-message');
 
 // Modifica el script.js con esto:
 let currentGroup = 0;
@@ -16,40 +18,43 @@ async function cargarDatos() {
     const respuesta = await fetch('datos.csv');
     const texto = await respuesta.text();
     const lineas = texto.split('\n').slice(1);
-    
+
     datos = lineas
         .filter(linea => linea.trim())
         .map(linea => {
             const [palabra, imagen] = linea.split(',');
             return { palabra: palabra.trim(), imagen: imagen.trim() };
         });
-    
+
     // Crear grupos de 3 elementos
     grupos = [];
     for (let i = 0; i < datos.length; i += GROUP_SIZE) {
         grupos.push(datos.slice(i, i + GROUP_SIZE));
     }
-    
+
     generarElementos();
 }
 
 function generarElementos() {
     const contenedorPalabras = document.querySelector('.palabras');
     const contenedorImagenes = document.querySelector('.imagenes');
-    
+
     // Limpiar contenedores
     contenedorPalabras.innerHTML = '';
     contenedorImagenes.innerHTML = '';
-    
+
     // Generar palabras del grupo actual
     grupos[currentGroup].forEach(({ palabra }) => {
         const div = document.createElement('div');
         div.className = 'palabra box';
         div.textContent = palabra;
         div.dataset.palabra = palabra;
+        div.setAttribute('tabindex', '0');
+        div.setAttribute('role', 'button');
+        div.setAttribute('aria-label', `Select word: ${palabra}`);
         contenedorPalabras.appendChild(div);
     });
-    
+
     // Generar imágenes mezcladas del grupo actual
     const imagenesMezcladas = [...grupos[currentGroup]]
         .sort(() => Math.random() - 0.5)
@@ -58,16 +63,29 @@ function generarElementos() {
             img.className = 'imagen box';
             img.src = imagen;
             img.dataset.palabra = palabra;
+            // Para imágenes
+            img.setAttribute('tabindex', '0');
+            img.setAttribute('role', 'button');
+            img.setAttribute('aria-label', `Select image for: ${palabra}`);
             return img;
         });
-    
+
     imagenesMezcladas.forEach(img => contenedorImagenes.appendChild(img));
-    
+
     // Actualizar referencias y eventos
     imagenes = document.querySelectorAll('.imagen');
     palabras = document.querySelectorAll('.palabra');
     emparejamientosGrupoActual = 0;
     agregarEventos();
+
+    // Inicializar navegación para nuevos elementos
+    inicializarNavegacion();
+
+    // Establecer foco inicial
+    focusableElements = obtenerElementosEnfocables();
+    if (focusableElements.length > 0) {
+        focusableElements[0].focus();
+    }
 }
 
 function agregarEventos() {
@@ -90,64 +108,139 @@ function agregarEventos() {
     });
 }
 
+// Inicializar al cargar
+document.addEventListener('DOMContentLoaded', () => {
+    inicializarNavegacion();
+    generarElementos();
+});
+
 // Funciones separadas para manejar los clicks
 function manejarClickImagen() {
     // Agregar evento click a cada imagen
-imagenes.forEach(imagen => {
-    imagen.addEventListener('click', () => {
-        // Verificar si la imagen ya está emparejada
-        if (imagen.getAttribute('data-emparejada') === 'true') {
-            return;
-        }
+    imagenes.forEach(imagen => {
+        imagen.addEventListener('click', () => {
+            // Verificar si la imagen ya está emparejada
+            if (imagen.getAttribute('data-emparejada') === 'true') {
+                return;
+            }
 
-        // Verificar si ya hay una imagen seleccionada
-        if (imagenSeleccionada) {
-            imagenSeleccionada.classList.toggle('seleccionado');
-        }
+            // Verificar si ya hay una imagen seleccionada
+            if (imagenSeleccionada) {
+                imagenSeleccionada.classList.toggle('seleccionado');
+            }
 
-        // Seleccionar la nueva imagen
-        imagen.classList.toggle('seleccionado');
-        imagenSeleccionada = imagen;
+            // Seleccionar la nueva imagen
+            imagen.classList.toggle('seleccionado');
+            imagenSeleccionada = imagen;
 
-        // Verificar si la palabra seleccionada coincide con la imagen
-        if (palabraSeleccionada) {
-            if (palabraSeleccionada.getAttribute('data-palabra') === imagen.getAttribute('data-palabra')) {
-                dibujarLinea(palabraSeleccionada, imagen); // Añadir esta línea
-                palabraSeleccionada.setAttribute('data-emparejada', 'true');
-                imagen.setAttribute('data-emparejada', 'true');
-                // Dentro de la condición de acierto en ambos listeners:
-                emparejamientosCorrectos++;
-                emparejamientosGrupoActual++;
-                emparejamientosCorrectosTotales++;
+            // Verificar si la palabra seleccionada coincide con la imagen
+            if (palabraSeleccionada) {
+                if (palabraSeleccionada.getAttribute('data-palabra') === imagen.getAttribute('data-palabra')) {
+
+                    
+
+                    // Actualizar mensaje para screen readers
+                    srMessage.textContent = 'Congratulations! Correct match: ' +
+                        palabraSeleccionada.textContent;
+
+                    dibujarLinea(palabraSeleccionada, imagen); // Añadir esta línea
+                    palabraSeleccionada.setAttribute('data-emparejada', 'true');
+                    imagen.setAttribute('data-emparejada', 'true');
+                    // Dentro de la condición de acierto en ambos listeners:
+                    emparejamientosCorrectos++;
+                    emparejamientosGrupoActual++;
+                    emparejamientosCorrectosTotales++;
+                    imagenSeleccionada = null;
+                    palabraSeleccionada = null;
+                    actualizarBarraProgreso(); // Añade esta línea
+
+                } else {
+                    imagen.classList.toggle('seleccionado');
+                    palabraSeleccionada.classList.toggle('seleccionado');
+                    // Emparejamiento incorrecto
+                    const srMessage = document.getElementById('sr-message');
+                    srMessage.textContent = 'Incorrect match. Try again.';
+
+
+                }
                 imagenSeleccionada = null;
                 palabraSeleccionada = null;
-                actualizarBarraProgreso(); // Añade esta línea
-
-            } else {
-                imagen.classList.toggle('seleccionado');
-                palabraSeleccionada.classList.toggle('seleccionado');
-                alert('ERROR!');
             }
-            imagenSeleccionada = null;
-            palabraSeleccionada = null;
-        }
 
-        if (emparejamientosGrupoActual === GROUP_SIZE) {
-            emparejamientosGrupoActual =0;
-            if (currentGroup < grupos.length - 1) {
-                currentGroup++;
-                setTimeout(() => {
-                    generarElementos();
-                }, 1500);
-            } else {
-                if (emparejamientosCorrectos === datos.length) {
-                    mostrarMensajeExito();
+            if (emparejamientosGrupoActual === GROUP_SIZE) {
+                emparejamientosGrupoActual = 0;
+                if (currentGroup < grupos.length - 1) {
+                    currentGroup++;
+                    setTimeout(() => {
+                        generarElementos();
+                    }, 1500);
+                } else {
+                    if (emparejamientosCorrectos === datos.length) {
+                        mostrarMensajeExito();
+                    }
                 }
             }
+
+        });
+    });
+}
+
+// Variables globales
+let currentFocusIndex = 0;
+let focusableElements = [];
+
+// Función para obtener elementos enfocables
+function obtenerElementosEnfocables() {
+    return Array.from(document.querySelectorAll(
+        '.palabra, .imagen, .boton-regreso, .mensaje-exito button'
+    )).filter(el => {
+        return el.offsetParent !== null &&
+            el.getAttribute('aria-hidden') !== 'true' &&
+            el.getAttribute('tabindex') !== '-1';
+    });
+}
+
+// Función para manejar el foco
+function manejarFoco(event) {
+    if (event.key === 'Tab') {
+        event.preventDefault();
+
+        focusableElements = obtenerElementosEnfocables();
+
+        if (event.shiftKey) {
+            // Shift + Tab (retroceder)
+            currentFocusIndex = currentFocusIndex > 0 ?
+                currentFocusIndex - 1 :
+                focusableElements.length - 1;
+        } else {
+            // Tab (avanzar)
+            currentFocusIndex = currentFocusIndex < focusableElements.length - 1 ?
+                currentFocusIndex + 1 :
+                0;
         }
 
+        focusableElements[currentFocusIndex].focus();
+    }
+}
+
+// Función para manejar la selección con Enter/Espacio
+function manejarSeleccion(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        event.target.click();
+    }
+}
+
+// Función para inicializar la navegación
+function inicializarNavegacion() {
+    document.addEventListener('keydown', manejarFoco);
+
+    // Agregar eventos a elementos dinámicos
+    document.querySelectorAll('.palabra, .imagen').forEach(elemento => {
+        elemento.addEventListener('keydown', manejarSeleccion);
+        elemento.setAttribute('tabindex', '0');
+        elemento.setAttribute('role', 'button');
     });
-});
 }
 
 function manejarClickPalabra() {
@@ -172,6 +265,13 @@ function manejarClickPalabra() {
             // Verificar si la imagen seleccionada coincide con la palabra
             if (imagenSeleccionada) {
                 if (palabra.getAttribute('data-palabra') === imagenSeleccionada.getAttribute('data-palabra')) {
+                    // Emparejamiento correcto
+                    const srMessage = document.getElementById('sr-message');
+
+                    // Actualizar mensaje para screen readers
+                    srMessage.textContent = 'Congratulations! Correct match: ' +
+                        palabraSeleccionada.textContent;
+
                     dibujarLinea(palabra, imagenSeleccionada); // Añadir esta línea
                     palabra.setAttribute('data-emparejada', 'true');
                     imagenSeleccionada.setAttribute('data-emparejada', 'true');
@@ -204,17 +304,37 @@ function verificarEmparejamiento() {
     if (imagenSeleccionada && palabraSeleccionada) {
         if (imagenSeleccionada.dataset.palabra === palabraSeleccionada.dataset.palabra) {
             // Emparejamiento correcto
+            const srMessage = document.getElementById('sr-message');
+
+            // Actualizar mensaje para screen readers
+            srMessage.textContent = 'Congratulations! Correct match: ' +
+                palabraSeleccionada.textContent;
+
+            // Resto de la lógica de emparejamiento
             dibujarLinea(palabraSeleccionada, imagenSeleccionada);
             palabraSeleccionada.setAttribute('data-emparejada', 'true');
             imagenSeleccionada.setAttribute('data-emparejada', 'true');
             emparejamientosCorrectos++;
             actualizarBarraProgreso();
 
-            if (emparejamientosCorrectos === datos.length) {
-                mostrarMensajeExito();
+            // Verificar si se completó el grupo
+            if (emparejamientosGrupoActual === GROUP_SIZE) {
+                if (currentGroup < grupos.length - 1) {
+                    currentGroup++;
+                    setTimeout(() => {
+                        generarElementos();
+                        srMessage.textContent = 'Loading next group of matches';
+                    }, 1500);
+                } else {
+                    mostrarMensajeExito();
+                    srMessage.textContent = 'Congratulations! All matches completed successfully!';
+                }
             }
         } else {
             // Emparejamiento incorrecto
+            const srMessage = document.getElementById('sr-message');
+            srMessage.textContent = 'Incorrect match. Try again.';
+
             setTimeout(() => {
                 imagenSeleccionada.classList.remove('seleccionado');
                 palabraSeleccionada.classList.remove('seleccionado');
@@ -275,6 +395,9 @@ function actualizarBarraProgreso() {
     if (emparejamientosCorrectos == imagenes.length) {
         mostrarMensajeExito();
     }
+
+    // Actualizar mensaje para screen reader
+    srMessage.textContent = `Progress: ${Math.round(progresoActual)}% completed`;
 
 }
 
