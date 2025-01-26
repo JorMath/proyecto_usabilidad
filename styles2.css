@@ -1,0 +1,323 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #1a1a1a; /* Fondo oscuro */
+    color: #ffffff; /* Texto blanco */
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contenedor-juego-2{
+    display: flex;
+    align-items: center;
+}
+.contenedor-superior {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: none
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.boton-regreso {
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.boton-regreso:hover {
+    background: rgba(142, 224, 0, 0.2); /* Verde con transparencia */
+}
+
+.boton-regreso svg path {
+    fill: #8EE000; /* Color verde para el icono */
+}
+
+.barra-progreso {
+    width: 200px;
+    height: 10px;
+    background: #333333; /* Fondo oscuro para la barra */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progreso {
+    height: 100%;
+    background: #8EE000; /* Verde brillante para el progreso */
+    transition: width 0.3s ease;
+}
+
+.contenedor-frase {
+    background: none; /* Fondo gris oscuro para la tarjeta */
+    padding: 2.5rem;
+    border-radius: 20px;
+    margin: 2rem 0;
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.frase {
+    font-size: 1.6rem;
+    margin-bottom: 2.5rem;
+    line-height: 2.8rem;
+    color: #ffffff; /* Texto blanco */
+    padding: 1rem;
+}
+
+.palabra-faltante {
+    display: inline-block;
+    min-width: 140px;
+    height: 45px;
+    border-bottom: 3px solid #8EE000; /* Borde verde */
+    margin: 0 8px;
+    vertical-align: middle;
+    color: #ffffff; /* Texto blanco */
+}
+
+.contenedor-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+}
+
+.opcion {
+    background: none; /* Botones verdes */
+    color: #ffffff; /* Texto oscuro */
+    padding: 1.2rem 2.4rem;
+    border-radius: 12px;
+    cursor: move;
+    border: 1px solid #ffffff;
+    transition: all 0.3s ease;
+    position: relative;
+    min-width: 160px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.opcion:hover {
+    background: #76B800; /* Verde más oscuro al pasar */
+    transform: translateY(-2px);
+    box-shadow: 0 3px 12px rgba(142, 224, 0, 0.3);
+}
+
+.opcion::after {
+    content: attr(data-tecla);
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%); /* Fondo oscuro suave */
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #ffffff;
+    border: 1px solid #ffffff /* Texto oscuro */
+}
+
+.teclado-ayuda {
+    text-align: center;
+    color: #8EE000; /* Texto verde */
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.mensaje-exito {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9); /* Fondo oscuro semitransparente */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.contenido-exito {
+    background: #2d2d2d; /* Fondo gris oscuro */
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+}
+
+.contenido-exito h2 {
+    color: #8EE000; /* Título en verde */
+    margin-bottom: 1.5rem;
+}
+
+.contenido-exito button {
+    background: #8EE000;
+    color: #1a1a1a;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.contenido-exito button:hover {
+    background: #76B800;
+    transform: translateY(-2px);
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #4C4C4C;
+}
+
+.contenedor-superior {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.boton-regreso {
+    background: #f0f0f0;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.boton-regreso:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.boton-regreso:active {
+    transform: translateY(0);
+}
+
+.boton-regreso svg {
+    fill: #333;
+}
+
+.barra-progreso {
+    flex: 1; /* Ocupa el espacio restante */
+    width: 80%;
+    height: 20px;
+    background-color: #818080;
+    border-radius: 10px;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.progreso {
+    width: 0%;
+    height: 100%;
+    background-color: #8EE000;
+    transition: width 0.3s ease;
+    border-radius: 10px;
+}
+
+.mensaje-exito {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.contenido-exito {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    animation: aparecer 0.5s ease;
+}
+
+.contenido-exito button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s ease;
+}
+
+.contenido-exito button:hover {
+    background: #45a049;
+}
+
+@keyframes aparecer {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.opcion.arrastrando {
+    opacity: 0.7;
+    transform: scale(0.95);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.5);
+}
+
+.palabra-faltante.correcto {
+    color: #2ecc71;
+    font-weight: bold;
+    animation: pop 0.3s ease;
+}
+
+.palabra-faltante.error {
+    animation: shake 0.5s;
+    color: #e74c3c;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
