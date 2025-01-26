@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,25 +8,33 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #83a4d4, #b6fbff);
+            background-color: #4C4C4C;
+            /* Fondo oscuro */
             min-height: 100vh;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            color: aliceblue;
+            /* Texto claro */
         }
 
         .menu {
             text-align: center;
             padding: 2rem;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(76, 76, 76, 0.9);
+            /* Fondo oscuro con transparencia */
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            /* Sombra más oscura */
+            border: 2px solid aliceblue;
+            /* Borde claro */
         }
 
         h1 {
-            color: #2c3e50;
+            color: aliceblue;
+            /* Texto claro */
             margin-bottom: 2rem;
             font-size: 2rem;
         }
@@ -39,8 +48,10 @@
         .game-button {
             padding: 1rem 2rem;
             font-size: 1.1rem;
-            background: #3498db;
-            color: white;
+            background: #8EE000;
+            /* Verde brillante */
+            color: #4C4C4C;
+            /* Texto oscuro */
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -48,11 +59,14 @@
             text-decoration: none;
         }
 
-        .game-button:hover, .game-button:focus {
-            background: #2980b9;
+        .game-button:hover,
+        .game-button:focus {
+            background: #7DCC00;
+            /* Verde más oscuro al pasar el ratón */
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            outline: 2px solid #ffffff;
+            outline: 2px solid aliceblue;
+            /* Borde claro */
         }
 
         .game-button:active {
@@ -61,7 +75,8 @@
 
         .instructions {
             margin-top: 2rem;
-            color: #2c3e50;
+            color: aliceblue;
+            /* Texto claro */
             max-width: 500px;
             line-height: 1.6;
         }
@@ -77,8 +92,22 @@
             white-space: nowrap;
             border: 0;
         }
+
+        /* Estilos para el foco */
+        [tabindex]:focus-visible {
+            outline: 3px solid #8EE000;
+            /* Verde brillante */
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        button:focus-visible {
+            box-shadow: 0 0 0 3px rgba(142, 224, 0, 0.3);
+            /* Sombra verde */
+        }
     </style>
 </head>
+
 <body>
     <div class="menu" role="main" aria-labelledby="main-heading">
         <h1 id="main-heading">Educational Games</h1>
@@ -99,7 +128,8 @@
 
         <div class="instructions">
             <h2>How to Play?</h2>
-            <p>Click on the game you want to start! The goal is to match each word with its corresponding image. Show off your skills!</p>
+            <p>Click on the game you want to start! The goal is to match each word with its corresponding image. Show
+                off your skills!</p>
         </div>
     </div>
 
@@ -110,4 +140,5 @@
         }
     </script>
 </body>
+
 </html>
