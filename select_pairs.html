@@ -3,35 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emparejar palabras con imágenes</title>
+    <title>Match Words with Images</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="script.js" defer></script>
 </head>
 
 <body>
     <div class="contenedor-superior">
-        <button class="boton-regreso" onclick="window.location.href = 'index.html'">
-            <svg viewBox="0 0 24 24" width="24" height="24">
+        <button class="boton-regreso" onclick="window.location.href = 'index.html'" aria-label="Go back to the game menu">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
                 <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
             </svg>
         </button>
-        <div class="barra-progreso">
-            <div class="progreso"></div>
+        <div class="barra-progreso" aria-label="Game progress">
+            <div class="progreso" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
         </div>
     </div>
-    <h1>Emparejar palabras con imágenes</h1>
+    <h1>Match Words with Images</h1>
 
-    <div class="contenedor">
-        <div class="conexion"></div>
-        <div class="palabras"></div>
-        <div class="imagenes"></div>
+    <div class="contenedor" aria-label="Matching game area">
+        <div class="conexion" aria-hidden="true"></div>
+        <div class="palabras" aria-label="Words to match"></div>
+        <div class="imagenes" aria-label="Images to match"></div>
     </div>
     
-    <div class="mensaje-exito">
+    <div class="mensaje-exito" aria-live="polite" role="dialog">
         <div class="contenido-exito">
-            <h2>¡Felicidades! 🎉</h2>
-            <p>Todas las parejas han sido correctamente emparejadas</p>
-            <button onclick="reiniciarJuego()">Jugar de nuevo</button>
+            <h2>Congratulations! 🎉</h2>
+            <p>All pairs have been matched correctly!</p>
+            <button onclick="reiniciarJuego()" aria-label="Play again">Play Again</button>
         </div>
     </div>
 </body>
