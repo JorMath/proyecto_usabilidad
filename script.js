@@ -4,6 +4,7 @@ let palabras = [];
 let imagenSeleccionada = null;
 let palabraSeleccionada = null;
 let emparejamientosCorrectos = 0;
+emparejamientosCorrectosTotales = 0;
 
 // Modifica el script.js con esto:
 let currentGroup = 0;
@@ -116,6 +117,8 @@ imagenes.forEach(imagen => {
                 imagen.setAttribute('data-emparejada', 'true');
                 // Dentro de la condición de acierto en ambos listeners:
                 emparejamientosCorrectos++;
+                emparejamientosGrupoActual++;
+                emparejamientosCorrectosTotales++;
                 imagenSeleccionada = null;
                 palabraSeleccionada = null;
                 actualizarBarraProgreso(); // Añade esta línea
@@ -129,9 +132,18 @@ imagenes.forEach(imagen => {
             palabraSeleccionada = null;
         }
 
-        // En ambos lugares donde estaba el alert de felicidades:
-        if (emparejamientosCorrectos == imagenes.length) {
-            mostrarMensajeExito();
+        if (emparejamientosGrupoActual === GROUP_SIZE) {
+            emparejamientosGrupoActual =0;
+            if (currentGroup < grupos.length - 1) {
+                currentGroup++;
+                setTimeout(() => {
+                    generarElementos();
+                }, 1500);
+            } else {
+                if (emparejamientosCorrectos === datos.length) {
+                    mostrarMensajeExito();
+                }
+            }
         }
 
     });
@@ -254,8 +266,8 @@ function dibujarLinea(inicio, fin) {
 
 function actualizarBarraProgreso() {
     const progreso = document.querySelector('.progreso');
-    const total = imagenes.length;
-    const progresoActual = (emparejamientosCorrectos / total) * 100;
+    const total = 12;
+    const progresoActual = (emparejamientosCorrectosTotales / total) * 100;
 
     progreso.style.width = `${progresoActual}%`;
 
