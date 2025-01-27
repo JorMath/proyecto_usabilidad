@@ -9,31 +9,31 @@
 </head>
 <body>
     <div class="contenedor-superior">
-        <button class="boton-regreso" onclick="window.location.href = 'index.html'" aria-label="Volver al menú">
-            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <button class="boton-regreso" onclick="window.location.href = 'index.html'" aria-label="Volver al menú principal">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
                 <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
             </svg>
         </button>
-        <div class="barra-progreso" aria-label="Progreso del juego">
-            <div class="progreso" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+        <div class="barra-progreso" aria-label="Progreso del juego" role="progressbar">
+            <div class="progreso" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"></div>
         </div>
     </div>
-    <h1>Fill the blank</h1>
+    <h1 tabindex="0">Fill the blank</h1>
     <div class="contenedor-juego-2">
         <div class="contenedor-frase">
-            <div class="frase" id="frase-container"></div>
-            <div class="contenedor-opciones" id="opciones-container"></div>
+            <div class="frase" id="frase-container" role="textbox" aria-label="Espacio para completar la frase" tabindex="0"></div>
+            <div class="contenedor-opciones" id="opciones-container" role="group" aria-label="Opciones para completar la frase" tabindex="0"></div>
             <div class="teclado-ayuda" aria-hidden="true">
                 📝 Use keyboard numbers from 1 to 4 to fill the sentence
             </div>
         </div>
     </div>
 
-    <div class="mensaje-exito" aria-live="polite" role="dialog">
+    <div class="mensaje-exito" aria-live="polite" role="dialog" aria-labelledby="mensaje-exito-titulo" aria-describedby="mensaje-exito-descripcion">
         <div class="contenido-exito">
-            <h2>¡Congratulations! 🎉</h2>
-            <p>¡You have completed all the phrases!</p>
-            <button onclick="reiniciarJuego()" aria-label="Jugar de nuevo">Play Again</button>
+            <h2 id="mensaje-exito-titulo" tabindex="0">¡Congratulations! 🎉</h2>
+            <p id="mensaje-exito-descripcion" tabindex="0">¡You have completed all the phrases!</p>
+            <button onclick="reiniciarJuego()" aria-label="Jugar de nuevo" tabindex="0">Play Again</button>
         </div>
     </div>
 </body>
