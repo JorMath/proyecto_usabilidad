@@ -26,8 +26,8 @@ let frases = [];
             const contenedorFrases = document.getElementById('frase-container');
             const opcionesContainer = document.getElementById('opciones-container');
             
-            contenedorFrases.innerHTML = fraseActual.frase.replace('___', 
-                `<span class="palabra-faltante" data-respuesta="${fraseActual.respuesta}"></span>`);
+            contenedorFrases.innerHTML = `<p tabindex="0">${fraseActual.frase.replace('___', 
+                `<span class="palabra-faltante" data-respuesta="${fraseActual.respuesta}" aria-live="polite"></span>`)}</p>`;            
             
             opcionesContainer.innerHTML = '';
             fraseActual.opciones.forEach((opcion, index) => {
@@ -37,6 +37,8 @@ let frases = [];
                 div.draggable = true;
                 div.dataset.respuesta = opcion;
                 div.dataset.tecla = index + 1;
+                div.tabIndex=0;
+                div.ariaLive="polite";
                 opcionesContainer.appendChild(div);
             });
             
