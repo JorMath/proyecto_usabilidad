@@ -43,6 +43,22 @@ function generarElementos() {
     contenedorPalabras.innerHTML = '';
     contenedorImagenes.innerHTML = '';
 
+    // Diccionario de descripciones para cada palabra
+    const descriptions = {
+        "Dog": "Animal that barks",
+        "Cat": "Animal that meows",
+        "Duck": "Water bird that quacks",
+        "Cow": "Farm animal that moos",
+        "Horse": "Animal used for riding",
+        "Sheep": "Wool-producing farm animal",
+        "Pig": "Farm animal that oinks",
+        "Lion": "Big wild cat with a mane",
+        "Elephant": "Large animal with a trunk",
+        "Giraffe": "Tall animal with a long neck",
+        "Monkey": "Tree-climbing animal",
+        "Tiger": "Large striped wild cat"
+    };
+
     // Generar palabras del grupo actual
     grupos[currentGroup].forEach(({ palabra }) => {
         const div = document.createElement('div');
@@ -55,7 +71,7 @@ function generarElementos() {
         contenedorPalabras.appendChild(div);
     });
 
-    // Generar imágenes mezcladas del grupo actual
+    // Generar imágenes mezcladas del grupo actual con descripciones en aria-label
     const imagenesMezcladas = [...grupos[currentGroup]]
         .sort(() => Math.random() - 0.5)
         .map(({ imagen, palabra }) => {
@@ -63,10 +79,10 @@ function generarElementos() {
             img.className = 'imagen box';
             img.src = imagen;
             img.dataset.palabra = palabra;
-            // Para imágenes
+            // Para accesibilidad, usando una descripción en inglés
             img.setAttribute('tabindex', '0');
             img.setAttribute('role', 'button');
-            img.setAttribute('aria-label', `Select image for: ${palabra}`);
+            img.setAttribute('aria-label', descriptions[palabra] || "An image related to a word");
             return img;
         });
 
@@ -87,6 +103,7 @@ function generarElementos() {
         focusableElements[0].focus();
     }
 }
+
 
 function agregarEventos() {
     // Limpiar eventos anteriores
