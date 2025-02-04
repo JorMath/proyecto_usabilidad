@@ -1,13 +1,13 @@
 word,image,description
 Dog,imagenes/Perro.jpeg,A canine that barks
-Cat,imagenes/gato.jpeg,A feline that meows
-Duck,imagenes/pato.jpeg,A waterfowl that quacks
-Cow,imagenes/vaca.jpeg,A bovine that moos
-Horse,imagenes/caballo.jpeg,A mammal used for riding
-Sheep,imagenes/oveja.jpeg,A woolly ruminant
-Pig,imagenes/cerdo.jpeg,A porcine that oinks
-Lion,imagenes/leon.jpeg,A big cat with a mane
-Elephant,imagenes/elefante.jpeg,A large mammal with a trunk
-Giraffe,imagenes/jirafa.jpeg,A tall mammal with a long neck
-Monkey,imagenes/mono.jpeg,A primate that climbs trees
-Tiger,imagenes/tigre.jpeg,A striped big cat
+Cat,imagenes/Gato.jpeg,A feline that meows
+Duck,imagenes/Pato.jpeg,A waterfowl that quacks
+Cow,imagenes/Vaca.jpeg,A bovine that moos
+Horse,imagenes/Caballo.jpeg,A mammal used for riding
+Sheep,imagenes/Oveja.jpeg,A woolly ruminant
+Pig,imagenes/Cerdo.jpeg,A porcine that oinks
+Lion,imagenes/Leon.jpeg,A big cat with a mane
+Elephant,imagenes/Elefante.jpeg,A large mammal with a trunk
+Giraffe,imagenes/Jirafa.jpeg,A tall mammal with a long neck
+Monkey,imagenes/Mono.jpeg,A primate that climbs trees
+Tiger,imagenes/Tigre.jpeg,A striped big cat
