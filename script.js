@@ -4,17 +4,18 @@ let palabras = [];
 let imagenSeleccionada = null;
 let palabraSeleccionada = null;
 let emparejamientosCorrectos = 0;
-emparejamientosCorrectosTotales = 0;
+let emparejamientosCorrectosTotales = 0;
 
-// Emparejamiento correcto
+// Elemento para mensajes de screen reader
 const srMessage = document.getElementById('sr-message');
 
-// Modifica el script.js con esto:
+// Variables para manejar grupos
 let currentGroup = 0;
 let grupos = [];
 let emparejamientosGrupoActual = 0;
 const GROUP_SIZE = 3;
 
+// Cargar datos del CSV
 async function cargarDatos() {
     const respuesta = await fetch('datos.csv');
     const texto = await respuesta.text();
@@ -34,6 +35,7 @@ async function cargarDatos() {
     generarElementos();
 }
 
+// Generar elementos del grupo actual
 function generarElementos() {
     const contenedorPalabras = document.querySelector('.palabras');
     const contenedorImagenes = document.querySelector('.imagenes');
@@ -41,6 +43,9 @@ function generarElementos() {
     // Limpiar contenedores
     contenedorPalabras.innerHTML = '';
     contenedorImagenes.innerHTML = '';
+
+    // Limpiar líneas anteriores
+    document.querySelector('.conexion').innerHTML = '';
 
     // Generar palabras del grupo actual
     grupos[currentGroup].forEach(({ palabra }) => {
@@ -87,6 +92,7 @@ function generarElementos() {
     }
 }
 
+// Agregar eventos a los elementos
 function agregarEventos() {
     // Limpiar eventos anteriores
     imagenes.forEach(img => img.replaceWith(img.cloneNode(true)));
@@ -107,13 +113,7 @@ function agregarEventos() {
     });
 }
 
-// Inicializar al cargar
-document.addEventListener('DOMContentLoaded', () => {
-    inicializarNavegacion();
-    cargarDatos().catch(error => console.error('Error cargando datos:', error));
-});
-
-// Funciones separadas para manejar los clicks
+// Manejar clic en una imagen
 function manejarClickImagen(event) {
     const imagen = event.target;
 
@@ -130,10 +130,10 @@ function manejarClickImagen(event) {
     // Seleccionar la nueva imagen
     imagen.classList.toggle('seleccionado');
     imagenSeleccionada = imagen;
-
     verificarEmparejamiento();
 }
 
+// Manejar clic en una palabra
 function manejarClickPalabra(event) {
     const palabra = event.target;
 
@@ -150,10 +150,10 @@ function manejarClickPalabra(event) {
     // Seleccionar la nueva palabra
     palabra.classList.toggle('seleccionado');
     palabraSeleccionada = palabra;
-
     verificarEmparejamiento();
 }
 
+// Verificar emparejamiento
 function verificarEmparejamiento() {
     if (imagenSeleccionada && palabraSeleccionada) {
         if (imagenSeleccionada.dataset.palabra === palabraSeleccionada.dataset.palabra) {
@@ -228,6 +228,7 @@ function dibujarLinea(inicio, fin) {
     conexion.appendChild(linea);
 }
 
+// Actualizar barra de progreso
 function actualizarBarraProgreso() {
     const progreso = document.querySelector('.progreso');
     const total = 12;
@@ -238,10 +239,12 @@ function actualizarBarraProgreso() {
     srMessage.textContent = `Progress: ${Math.round(progresoActual)}% completed`;
 }
 
+// Mostrar mensaje de éxito
 function mostrarMensajeExito() {
     document.querySelector('.mensaje-exito').style.display = 'flex';
 }
 
+// Reiniciar juego
 function reiniciarJuego() {
     emparejamientosCorrectos = 0;
     imagenSeleccionada = null;
@@ -259,10 +262,11 @@ function reiniciarJuego() {
     cargarDatos().catch(error => console.error('Error cargando datos:', error));
 }
 
-// Variables globales
+// Variables globales para navegación
 let currentFocusIndex = 0;
 let focusableElements = [];
 
+// Obtener elementos enfocables
 function obtenerElementosEnfocables() {
     return Array.from(document.querySelectorAll(
         '.palabra, .imagen, .boton-regreso, .mensaje-exito button'
@@ -273,6 +277,7 @@ function obtenerElementosEnfocables() {
     });
 }
 
+// Manejar foco con Tab
 function manejarFoco(event) {
     if (event.key === 'Tab') {
         event.preventDefault();
@@ -292,6 +297,7 @@ function manejarFoco(event) {
     }
 }
 
+// Manejar selección con Enter/Espacio
 function manejarSeleccion(event) {
     if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
@@ -299,6 +305,7 @@ function manejarSeleccion(event) {
     }
 }
 
+// Inicializar navegación
 function inicializarNavegacion() {
     document.addEventListener('keydown', manejarFoco);
 
@@ -308,3 +315,9 @@ function inicializarNavegacion() {
         elemento.setAttribute('role', 'button');
     });
 }
+
+// Inicializar al cargar
+document.addEventListener('DOMContentLoaded', () => {
+    inicializarNavegacion();
+    cargarDatos().catch(error => console.error('Error cargando datos:', error));
+});
